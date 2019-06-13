@@ -29,20 +29,10 @@ module.exports = {
   module: {
     rules: [
       {
-        include: [path.resolve(__dirname, "src")],
-        exclude: /node_modules/,
         loader: "babel-loader",
         options: {
           plugins: ["syntax-dynamic-import"],
-          presets: [
-            [
-              "@babel/preset-env",
-              {
-                modules: false
-              }
-            ],
-            ["@babel/preset-react"]
-          ]
+          presets: ["@babel/preset-env", "@babel/preset-react"]
         },
 
         test: /\.jsx?$/
@@ -58,7 +48,9 @@ module.exports = {
     filename: "[name].[chunkhash].js",
     path: path.resolve(__dirname, "dist")
   },
-
+  resolve: {
+    extensions: [".jsx", ".js"]
+  },
   mode: "development",
   plugins: [
     new UglifyJSPlugin(),
