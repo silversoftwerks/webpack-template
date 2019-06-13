@@ -26,42 +26,45 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = function webpackTemplateConfig(__dirname, config) {
-  return {
-    module: {
-      rules: [
-        {
-          loader: "babel-loader",
-          options: {
-            plugins: ["syntax-dynamic-import"],
-            presets: ["@babel/preset-env", "@babel/preset-react"]
-          },
+  return Object.assign(
+    {
+      module: {
+        rules: [
+          {
+            loader: "babel-loader",
+            options: {
+              plugins: ["syntax-dynamic-import"],
+              presets: ["@babel/preset-env", "@babel/preset-react"]
+            },
 
-          test: /\.jsx?$/
-        }
+            test: /\.jsx?$/
+          }
+        ]
+      },
+
+      entry: {
+        index: "./src/index.js"
+      },
+
+      output: {
+        filename: "[name].[chunkhash].js",
+        path: path.resolve(__dirname, "dist")
+      },
+      resolve: {
+        extensions: [".jsx", ".js"]
+      },
+      mode: "development",
+      plugins: [
+        new UglifyJSPlugin(),
+        new HtmlWebpackPlugin({
+          inject: true,
+          template: path.resolve(
+            __dirname,
+            "node_modules/@SS/html-template/template.html"
+          )
+        })
       ]
     },
-
-    entry: {
-      index: "./src/index.js"
-    },
-
-    output: {
-      filename: "[name].[chunkhash].js",
-      path: path.resolve(__dirname, "dist")
-    },
-    resolve: {
-      extensions: [".jsx", ".js"]
-    },
-    mode: "development",
-    plugins: [
-      new UglifyJSPlugin(),
-      new HtmlWebpackPlugin({
-        inject: true,
-        template: path.resolve(
-          __dirname,
-          "node_modules/@SS/html-template/template.html"
-        )
-      })
-    ]
-  };
+    config
+  );
 };
