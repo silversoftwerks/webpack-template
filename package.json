@@ -1,11 +1,19 @@
 {
-  "name": "@SS/webpack-base",
+  "name": "@SS/webpack-template",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack"
   },
   "author": "Silver Softwerks",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@SS/babel-dependencies": "file:///mnt/c/Users/scsil/code/silver-softwerks/babel-dependencies",
+    "@SS/html-template": "file:///mnt/c/Users/scsil/code/silver-softwerks/html-template",
+    "@SS/webpack-dependencies": "file:///mnt/c/Users/scsil/code/silver-softwerks/webpack-dependencies",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
 }

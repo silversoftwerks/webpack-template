@@ -1,5 +1,6 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -22,53 +23,51 @@ const path = require('path');
  *
  */
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-	module: {
-		rules: [
-			{
-				include: [path.resolve(__dirname, 'src')],
-				loader: 'babel-loader',
+  module: {
+    rules: [
+      {
+        include: [path.resolve(__dirname, "src")],
+        exclude: /node_modules/,
+        loader: "babel-loader",
+        options: {
+          plugins: ["syntax-dynamic-import"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                modules: false
+              }
+            ],
+            ["@babel/preset-react"]
+          ]
+        },
 
-				options: {
-					plugins: ['syntax-dynamic-import'],
+        test: /\.jsx?$/
+      }
+    ]
+  },
 
-					presets: [
-						[
-							'@babel/preset-env',
-							{
-								modules: false
-							}
-						]
-					]
-				},
+  entry: {
+    index: "./src/index.js"
+  },
 
-				test: /\.js$/
-			}
-		]
-	},
+  output: {
+    filename: "[name].[chunkhash].js",
+    path: path.resolve(__dirname, "dist")
+  },
 
-	output: {
-		chunkFilename: '[name].[chunkhash].js',
-		filename: '[name].[chunkhash].js'
-	},
-
-	mode: 'development',
-
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				vendors: {
-					priority: -10,
-					test: /[\\/]node_modules[\\/]/
-				}
-			},
-
-			chunks: 'async',
-			minChunks: 1,
-			minSize: 30000,
-			name: true
-		}
-	}
+  mode: "development",
+  plugins: [
+    new UglifyJSPlugin(),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.resolve(
+        __dirname,
+        "node_modules/@SS/html-template/template.html"
+      )
+    })
+  ]
 };
