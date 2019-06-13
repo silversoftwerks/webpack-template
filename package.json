@@ -11,7 +11,7 @@
   "dependencies": {},
   "devDependencies": {
     "@SS/babel-dependencies": "file:///mnt/c/Users/scsil/code/silver-softwerks/babel-dependencies",
-    "@SS/html-template": "file:///mnt/c/Users/scsil/code/silver-softwerks/html-template",
+    "@SS/html-template": "git+https://github.com/silversoftwerks/html-template.git",
     "@SS/webpack-dependencies": "file:///mnt/c/Users/scsil/code/silver-softwerks/webpack-dependencies",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
